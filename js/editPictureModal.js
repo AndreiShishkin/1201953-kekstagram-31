@@ -34,7 +34,7 @@ const editPicture = (range, uploadPicture, sliderContainer, effectLevel) => {
     switch (effectValue) {
       case 'none':
         uploadPicture.style.filter = '';
-        effectLevel.value = 100;
+        effectLevel.value = '';
         break;
 
       case 'chrome':

@@ -1,7 +1,8 @@
-import { isEscapeKey } from '/js/utility.js';
-import { validateInicial } from '/js/validateUploadImageForm.js';
-import { scaleImage, editPicture } from '/js/editPictureModal.js';
+import { isEscapeKey, showAlert } from './utility.js';
+import { validateInicial } from './validateUploadImageForm.js';
+import { scaleImage, editPicture } from './editPictureModal.js';
 import { resetFilter } from './slider.js';
+import { sendData } from './api.js';
 
 const formLoadPicture = document.querySelector('#upload-select-image');
 const buttonLoad = formLoadPicture.querySelector('#upload-file');
@@ -27,10 +28,14 @@ imageUploadScale.addEventListener('click', scaleImageChange);
 const onChangeSelectEffect = editPicture(range, uploadImage, sliderContainer, effectLevel);
 let pristine;
 
+const unlockButton = () => {
+  submitButton.disabled = false;
+};
+
 const closeModal = () => {
   modalEditPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  resetFilter(uploadImage, originalEffect, uploadImage);
+  resetFilter(uploadImage, originalEffect);
 
   formLoadPicture.reset();
   pristine.destroy();
@@ -70,7 +75,11 @@ formLoadPicture.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
-    formLoadPicture.submit();
+    const formData = new FormData(evt.target);
+    sendData(formData)
+      .then(closeModal)
+      .catch(() => showAlert)
+      .finally(unlockButton);
     submitButton.setAttribute('disabled', 'disabled');
     pristine.destroy();
   }

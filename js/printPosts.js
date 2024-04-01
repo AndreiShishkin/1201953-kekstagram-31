@@ -1,9 +1,13 @@
-import { getPosts } from './post.js';
+// import { getPosts } from './post.js';
+import { getData } from './api.js';
+import { showAlert } from './utility.js';
 
-const MAX_POST_LENGTH = 25;
+// const MAX_POST_LENGTH = 25;
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const posts = getPosts(MAX_POST_LENGTH);
+// const posts = getPosts(MAX_POST_LENGTH);
+// const posts = getData().then((data) => data);
+// console.log(posts);
 
 const documentFragment = document.createDocumentFragment();
 
@@ -37,19 +41,22 @@ const printPictures = (elementToRender) => {
     return;
   }
 
-  posts.forEach((post) => {
-    const picture = pictureTemplate.cloneNode(true);
-    const postImage = picture.querySelector('.picture__img');
-    postImage.src = post.url;
-    postImage.alt = post.description;
-    picture.querySelector('.picture__likes').textContent = post.likes;
-    picture.querySelector('.picture__comments').textContent = post.comments.length;
-    documentFragment.append(picture);
+  getData().then((posts) => {
+    posts.forEach((post) => {
+      const picture = pictureTemplate.cloneNode(true);
+      const postImage = picture.querySelector('.picture__img');
+      postImage.src = post.url;
+      postImage.alt = post.description;
+      picture.querySelector('.picture__likes').textContent = post.likes;
+      picture.querySelector('.picture__comments').textContent = post.comments.length;
+      documentFragment.append(picture);
 
-    setObjectByDomElements(picture, post);
-  });
+      setObjectByDomElements(picture, post);
+    });
 
-  elementToRender.append(documentFragment);
+    elementToRender.append(documentFragment);
+  })
+    .catch(() => showAlert());
 };
 
 export { printPictures, getObjectsByDomElements };

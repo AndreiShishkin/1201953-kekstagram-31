@@ -7,6 +7,9 @@ const generateId = () => {
   };
 };
 
+const SHOW_ERROR_TIME = 5000;
+
+
 const getRandomNumberFromRange = (min, max) =>
   Math.round(min + (max - min) * Math.random());
 
@@ -43,4 +46,16 @@ const getStringFromArray = (elements) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {generateId, getUnicueIdentifierFromRange, getStringFromArray, getRandomArrayElement, getRandomNumberFromRange, isEscapeKey};
+const showAlert = (message) => {
+  const errorBlock = document.querySelector('#data-error').content.querySelector('.data-error');
+  if(message) {
+    errorBlock.querySelector('h2').textContent = message;
+  }
+  document.body.insertAdjacentElement('beforeend', errorBlock);
+  setTimeout(() => {
+    errorBlock.remove();
+  }, SHOW_ERROR_TIME);
+};
+
+
+export {generateId, getUnicueIdentifierFromRange, getStringFromArray, getRandomArrayElement, getRandomNumberFromRange, isEscapeKey, showAlert};
