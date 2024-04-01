@@ -45,8 +45,10 @@ const closeModal = () => {
 
 const onKeydownCloseModal = (evt) => {
   if (isEscapeKey(evt)) {
-    closeModal();
-    document.removeEventListener('keydown', onKeydownCloseModal);
+    if (!document.querySelector('.error')) {
+      closeModal();
+      document.removeEventListener('keydown', onKeydownCloseModal);
+    }
   }
 };
 
@@ -76,12 +78,12 @@ formLoadPicture.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
   if (isValid) {
     const formData = new FormData(evt.target);
+    submitButton.setAttribute('disabled', 'disabled');
     sendData(formData)
       .then(closeModal)
       .then(showAlertSuccessSendData)
       .catch(() => showAlertErrorSendData())
       .finally(unlockButton);
-    submitButton.setAttribute('disabled', 'disabled');
     pristine.destroy();
   }
 });
