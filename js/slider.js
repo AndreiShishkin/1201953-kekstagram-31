@@ -24,8 +24,8 @@ const updateSliderRange = (sliderElement, minRange, maxRange, step, start) => {
   });
 };
 
-const resetFilter = (uploadImagePreviewElement, originalEffectElement, uploadImageElement) => {
-  uploadImagePreviewElement.style.transform = `scale(${1})`;
+const resetFilter = (uploadImageElement, originalEffectElement) => {
+  uploadImageElement.style.transform = `scale(${1})`;
   originalEffectElement.setAttribute('checked', 'checked');
   uploadImageElement.style.filter = '';
 };

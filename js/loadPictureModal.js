@@ -1,7 +1,8 @@
-import { isEscapeKey } from '/js/utility.js';
-import { validateInicial } from '/js/validateUploadImageForm.js';
-import { scaleImage, editPicture } from '/js/editPictureModal.js';
+import { isEscapeKey, showAlertSuccessSendData, showAlertErrorSendData } from './utility.js';
+import { validateInicial } from './validateUploadImageForm.js';
+import { scaleImage, editPicture } from './editPictureModal.js';
 import { resetFilter } from './slider.js';
+import { sendData } from './api.js';
 
 const formLoadPicture = document.querySelector('#upload-select-image');
 const buttonLoad = formLoadPicture.querySelector('#upload-file');
@@ -27,10 +28,14 @@ imageUploadScale.addEventListener('click', scaleImageChange);
 const onChangeSelectEffect = editPicture(range, uploadImage, sliderContainer, effectLevel);
 let pristine;
 
+const unlockButton = () => {
+  submitButton.disabled = false;
+};
+
 const closeModal = () => {
   modalEditPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  resetFilter(uploadImage, originalEffect, uploadImage);
+  resetFilter(uploadImage, originalEffect);
 
   formLoadPicture.reset();
   pristine.destroy();
@@ -40,8 +45,10 @@ const closeModal = () => {
 
 const onKeydownCloseModal = (evt) => {
   if (isEscapeKey(evt)) {
-    closeModal();
-    document.removeEventListener('keydown', onKeydownCloseModal);
+    if (!document.querySelector('.error')) {
+      closeModal();
+      document.removeEventListener('keydown', onKeydownCloseModal);
+    }
   }
 };
 
@@ -70,8 +77,13 @@ formLoadPicture.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
-    formLoadPicture.submit();
+    const formData = new FormData(evt.target);
     submitButton.setAttribute('disabled', 'disabled');
+    sendData(formData)
+      .then(closeModal)
+      .then(showAlertSuccessSendData)
+      .catch(() => showAlertErrorSendData())
+      .finally(unlockButton);
     pristine.destroy();
   }
 });
