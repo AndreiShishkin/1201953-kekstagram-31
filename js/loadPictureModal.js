@@ -1,4 +1,4 @@
-import { isEscapeKey, showAlert } from './utility.js';
+import { isEscapeKey, showAlertSuccessSendData, showAlertErrorSendData } from './utility.js';
 import { validateInicial } from './validateUploadImageForm.js';
 import { scaleImage, editPicture } from './editPictureModal.js';
 import { resetFilter } from './slider.js';
@@ -78,7 +78,8 @@ formLoadPicture.addEventListener('submit', (evt) => {
     const formData = new FormData(evt.target);
     sendData(formData)
       .then(closeModal)
-      .catch(() => showAlert)
+      .then(showAlertSuccessSendData)
+      .catch(() => showAlertErrorSendData())
       .finally(unlockButton);
     submitButton.setAttribute('disabled', 'disabled');
     pristine.destroy();

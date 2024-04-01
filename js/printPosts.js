@@ -1,6 +1,6 @@
 // import { getPosts } from './post.js';
 import { getData } from './api.js';
-import { showAlert } from './utility.js';
+import { showAlertErrorLoadData } from './utility.js';
 
 // const MAX_POST_LENGTH = 25;
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -56,7 +56,7 @@ const printPictures = (elementToRender) => {
 
     elementToRender.append(documentFragment);
   })
-    .catch(() => showAlert());
+    .catch(() => showAlertErrorLoadData());
 };
 
 export { printPictures, getObjectsByDomElements };
