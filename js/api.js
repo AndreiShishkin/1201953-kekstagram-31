@@ -18,7 +18,7 @@ const load = (route, method = Method.GET, body = null) => fetch(`${BASE_URL}${ro
     return response.json();
   })
   .catch((err) => {
-    throw new Error(err);
+    console.error(err);// throw new Error(err);
   });
 
 const getData = () => load(Route.GET_DATA);
