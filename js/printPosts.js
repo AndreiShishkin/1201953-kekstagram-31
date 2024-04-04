@@ -1,16 +1,14 @@
-import { randomSort, mostPopularSort } from './imageFiltering.js';
-
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const documentFragment = document.createDocumentFragment();
 
 const objectsByElements = new Map;
 
-const Filters = {
-  default: (posts) => posts,
-  random: (posts) => randomSort(posts),
-  discussed: (posts) => mostPopularSort(posts)
-};
+// const Filters = {
+//   default: (posts) => posts,
+//   random: (posts) => randomSort(posts),
+//   discussed: (posts) => mostPopularSort(posts)
+// };
 
 const setObjectByDomElements = (element, object) => {
   objectsByElements.set(element, object);
@@ -18,12 +16,12 @@ const setObjectByDomElements = (element, object) => {
 
 const getObjectsByDomElements = () => objectsByElements;
 
-const printPictures = (posts, elementToRender, renderFilter = 'default') => {
+const printPictures = (posts, elementToRender, filterCallBack = (arrayTorender) => arrayTorender) => {
   if (!(elementToRender instanceof Node)) {
     console.error('Параметр не является дом-элементом');
     return;
   }
-  Filters[renderFilter](posts.slice())
+  filterCallBack(posts.slice())
     .forEach((post) => {
       const picture = pictureTemplate.cloneNode(true);
       const postImage = picture.querySelector('.picture__img');

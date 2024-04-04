@@ -1,20 +1,4 @@
-// import { debounce } from './utility.js';
-
-// const RENDER_DELAY = 500;
-
 const filtersForm = document.querySelector('.img-filters__form');
-
-const setFilter = (renderPostsCallback) => {
-  filtersForm.addEventListener('click', (evt) => {
-    if (evt.target.nodeName === 'BUTTON') {
-      filtersForm.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
-      const filter = evt.target;
-      filter.classList.add('img-filters__button--active');
-      // debounce(() => renderPostsCallback(filter.id.replace('filter-', '')), RENDER_DELAY)();
-      renderPostsCallback(filter.id.replace('filter-', ''));
-    }
-  });
-};
 
 const randomSort = (posts) => {
   let currentIndex = posts.length;
@@ -33,4 +17,21 @@ const mostPopularSort = (posts) => {
   return posts;
 };
 
-export { setFilter, randomSort, mostPopularSort };
+const Filters = {
+  default: (posts) => posts,
+  random: (posts) => randomSort(posts),
+  discussed: (posts) => mostPopularSort(posts)
+};
+
+const showFilter = (renderPostsCallback) => {
+  filtersForm.addEventListener('click', (evt) => {
+    if (evt.target.nodeName === 'BUTTON') {
+      filtersForm.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
+      const filter = evt.target;
+      filter.classList.add('img-filters__button--active');
+      renderPostsCallback(Filters[filter.id.replace('filter-', '')]);
+    }
+  });
+};
+
+export { showFilter };
