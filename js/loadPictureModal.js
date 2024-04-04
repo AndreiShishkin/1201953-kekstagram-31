@@ -4,6 +4,8 @@ import { scaleImage, editPicture } from './editPictureModal.js';
 import { resetFilter } from './slider.js';
 import { sendData } from './api.js';
 
+const FilesExtensions = ['.jpeg', '.gif', '.jpg', '.png'];
+
 const formLoadPicture = document.querySelector('#upload-select-image');
 const buttonLoad = formLoadPicture.querySelector('#upload-file');
 const modalEditPicture = formLoadPicture.querySelector('.img-upload__overlay');
@@ -54,13 +56,21 @@ const onKeydownCloseModal = (evt) => {
 
 const openModal = () => {
   const validateForm = validateInicial(formLoadPicture, textHashtags, textComment);
+  pristine = validateForm();
   modalEditPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  pristine = validateForm();
   sliderContainer.classList.add('hidden');
 
   document.addEventListener('keydown', onKeydownCloseModal);
   effectsList.addEventListener('change', onChangeSelectEffect);
+
+  if (FilesExtensions.some((extinsion) => buttonLoad.files[0].name.endsWith(extinsion))) {
+    const loadedFile = URL.createObjectURL(buttonLoad.files[0]);
+    uploadImage.src = loadedFile;
+    modalEditPicture.querySelectorAll('.effects__preview').forEach((filterImage) => {
+      filterImage.style.backgroundImage = `url(${loadedFile}`;
+    });
+  }
 };
 
 buttonLoad.addEventListener('change', () => {
