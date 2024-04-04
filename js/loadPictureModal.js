@@ -4,7 +4,7 @@ import { scaleImage, editPicture } from './editPictureModal.js';
 import { resetFilter } from './slider.js';
 import { sendData } from './api.js';
 
-const FilesExtensions = ['.jpeg', '.gif', '.jpg', '.png'];
+const FIELS_EXTENSIONS = ['.jpeg', '.jpg', '.png'];
 
 const formLoadPicture = document.querySelector('#upload-select-image');
 const buttonLoad = formLoadPicture.querySelector('#upload-file');
@@ -64,17 +64,22 @@ const openModal = () => {
   document.addEventListener('keydown', onKeydownCloseModal);
   effectsList.addEventListener('change', onChangeSelectEffect);
 
-  if (FilesExtensions.some((extinsion) => buttonLoad.files[0].name.endsWith(extinsion))) {
-    const loadedFile = URL.createObjectURL(buttonLoad.files[0]);
-    uploadImage.src = loadedFile;
-    modalEditPicture.querySelectorAll('.effects__preview').forEach((filterImage) => {
-      filterImage.style.backgroundImage = `url(${loadedFile}`;
-    });
-  }
+  const loadedFile = URL.createObjectURL(buttonLoad.files[0]);
+  uploadImage.src = loadedFile;
+  modalEditPicture.querySelectorAll('.effects__preview').forEach((filterImage) => {
+    filterImage.style.backgroundImage = `url(${loadedFile}`;
+  });
 };
 
 buttonLoad.addEventListener('change', () => {
-  openModal();
+  if (FIELS_EXTENSIONS.some((extinsion) => buttonLoad.files[0].name.toLowerCase().endsWith(extinsion))) {
+    if(buttonLoad.files[0].size < 2e+8) {
+      openModal();
+    } else {
+      showAlertErrorSendData('Файл превышает 200 МБ');
+      formLoadPicture.reset();
+    }
+  }
 });
 
 closeFormButton.addEventListener('click', () => {
