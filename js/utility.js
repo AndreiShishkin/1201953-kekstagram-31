@@ -41,8 +41,11 @@ const showAlertSuccessSendData = () => {
   });
 };
 
-const showAlertErrorSendData = () => {
+const showAlertErrorSendData = (text) => {
   const errorBlock = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
+  if(text) {
+    errorBlock.querySelector('.error__title').innerHTML = text;
+  }
   document.body.insertAdjacentElement('beforeend', errorBlock);
 
   errorBlock.addEventListener('click', (evt) => {
