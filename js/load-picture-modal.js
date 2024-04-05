@@ -23,9 +23,9 @@ const effectLevel = modalEditPicture.querySelector('.effect-level__value');
 
 const imageUploadScale = modalEditPicture.querySelector('.img-upload__scale');
 
-const scaleImageChange = scaleImage(scaleText, uploadImage);
+const onImageUploadScaleChange = scaleImage(scaleText, uploadImage);
 
-imageUploadScale.addEventListener('click', scaleImageChange);
+imageUploadScale.addEventListener('click', onImageUploadScaleChange);
 
 const onSliderChange = editPicture(range, uploadImage, sliderContainer, effectLevel);
 let pristine;

@@ -1,14 +1,14 @@
 const MAX_COMMENT_LENGTH = 140;
 const MAX_COUNT_HASHTAGS = 5;
 
-const hashtagRegex = /^#[a-zа-яё0-9]{1,19}/i;
+const HASHTAGREGEX = /^#[a-zа-яё0-9]{1,19}/i;
 
 const validateComment = (value) => value.length <= MAX_COMMENT_LENGTH;
 
 const validateHashtags = (value) => {
   const hashtags = value.toLowerCase().split(' ').filter((element) => element !== '');
   const duplicates = hashtags.filter((element, indexCurrentElement, hashtagsArray) => hashtagsArray.indexOf(element) !== indexCurrentElement);
-  const isValidHashtags = hashtags.every((hashtag) => hashtagRegex.exec(hashtag) ? hashtagRegex.exec(hashtag)[0] === hashtag : false);
+  const isValidHashtags = hashtags.every((hashtag) => HASHTAGREGEX.exec(hashtag) ? HASHTAGREGEX.exec(hashtag)[0] === hashtag : false);
   if (duplicates.length === 0 && hashtags.length <= MAX_COUNT_HASHTAGS && isValidHashtags) {
     return true;
   }
@@ -36,7 +36,7 @@ const validateInicial = (validateForm, hashtagsInput, commentInput) => () => {
     }
     const invalidHashtags = [];
     hashtags.forEach((hashtag) => {
-      if (hashtagRegex.exec(hashtag) ? hashtagRegex.exec(hashtag)[0] !== hashtag : true) {
+      if (HASHTAGREGEX.exec(hashtag) ? HASHTAGREGEX.exec(hashtag)[0] !== hashtag : true) {
         invalidHashtags.push(hashtag);
       }
     });

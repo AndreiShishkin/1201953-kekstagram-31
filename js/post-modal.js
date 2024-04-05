@@ -79,7 +79,7 @@ const printModalPost = (post) => {
   buttonLoadComments.addEventListener('click', onButtonLoadCommentsClick);
 };
 
-const onClickOpenPopupPost = (evt) => {
+const onPicturesClick = (evt) => {
   const post = evt.target.closest('.picture');
   if (post) {
     evt.preventDefault();
@@ -87,4 +87,4 @@ const onClickOpenPopupPost = (evt) => {
   }
 };
 
-pictures.addEventListener('click', onClickOpenPopupPost);
+pictures.addEventListener('click', onPicturesClick);
