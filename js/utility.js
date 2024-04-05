@@ -66,6 +66,10 @@ const showFilters = () => {
 };
 
 
+const clearPictures = (elementToClear) => {
+  elementToClear.querySelectorAll('a').forEach((child) => elementToClear.removeChild(child));
+};
+
 const debounce = (callback, delay) => {
   let timerId;
 
@@ -75,4 +79,4 @@ const debounce = (callback, delay) => {
   };
 };
 
-export { isEscapeKey, showAlertErrorLoadData, showAlertSuccessSendData, showAlertErrorSendData, showFilters, debounce };
+export { isEscapeKey, showAlertErrorLoadData, showAlertSuccessSendData, showAlertErrorSendData, showFilters, clearPictures, debounce };

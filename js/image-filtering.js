@@ -23,15 +23,16 @@ const Filters = {
   discussed: (posts) => mostPopularSort(posts)
 };
 
-const showFilter = (renderPostsCallback) => {
+const registerFilterEvents = (posts, renderPostsCallback) => {
   filtersForm.addEventListener('click', (evt) => {
     if (evt.target.nodeName === 'BUTTON') {
       filtersForm.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
       const filter = evt.target;
       filter.classList.add('img-filters__button--active');
-      renderPostsCallback(Filters[filter.id.replace('filter-', '')]);
+      const postsToRender = Filters[filter.id.replace('filter-', '')](posts.slice());
+      renderPostsCallback(postsToRender);
     }
   });
 };
 
-export { showFilter };
+export { registerFilterEvents };
