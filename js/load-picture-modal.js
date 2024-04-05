@@ -1,6 +1,6 @@
 import { isEscapeKey, showAlertSuccessSendData, showAlertErrorSendData } from './utility.js';
-import { validateInicial } from './validateUploadImageForm.js';
-import { scaleImage, editPicture } from './editPictureModal.js';
+import { validateInicial } from './validate-upload-image-form.js';
+import { scaleImage, editPicture } from './edit-picture-modal.js';
 import { resetFilter } from './slider.js';
 import { sendData } from './api.js';
 
@@ -27,7 +27,7 @@ const scaleImageChange = scaleImage(scaleText, uploadImage);
 
 imageUploadScale.addEventListener('click', scaleImageChange);
 
-const onChangeSelectEffect = editPicture(range, uploadImage, sliderContainer, effectLevel);
+const onSliderChange = editPicture(range, uploadImage, sliderContainer, effectLevel);
 let pristine;
 
 const unlockButton = () => {
@@ -42,14 +42,14 @@ const closeModal = () => {
   formLoadPicture.reset();
   pristine.destroy();
 
-  effectsList.removeEventListener('change', onChangeSelectEffect);
+  effectsList.removeEventListener('change', onSliderChange);
 };
 
-const onKeydownCloseModal = (evt) => {
+const onModalEditPictureKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     if (!document.querySelector('.error')) {
       closeModal();
-      document.removeEventListener('keydown', onKeydownCloseModal);
+      document.removeEventListener('keydown', onModalEditPictureKeydown);
     }
   }
 };
@@ -61,8 +61,8 @@ const openModal = () => {
   document.body.classList.add('modal-open');
   sliderContainer.classList.add('hidden');
 
-  document.addEventListener('keydown', onKeydownCloseModal);
-  effectsList.addEventListener('change', onChangeSelectEffect);
+  document.addEventListener('keydown', onModalEditPictureKeydown);
+  effectsList.addEventListener('change', onSliderChange);
 
   const loadedFile = URL.createObjectURL(buttonLoad.files[0]);
   uploadImage.src = loadedFile;
@@ -84,7 +84,7 @@ buttonLoad.addEventListener('change', () => {
 
 closeFormButton.addEventListener('click', () => {
   closeModal();
-  document.removeEventListener('keydown', onKeydownCloseModal);
+  document.removeEventListener('keydown', onModalEditPictureKeydown);
 });
 
 formLoadPicture.addEventListener('submit', (evt) => {

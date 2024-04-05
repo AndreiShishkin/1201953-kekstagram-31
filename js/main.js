@@ -1,9 +1,9 @@
-import { printPictures } from '/js/printPosts.js';
-import '/js/postModal.js';
-import '/js/loadPictureModal.js';
+import { printPictures } from './print-posts.js';
+import './post-modal.js';
+import './load-picture-modal.js';
 import { getData } from './api.js';
 import { showAlertErrorLoadData, showFilters, debounce } from './utility.js';
-import { showFilter } from './imageFiltering.js';
+import { showFilter } from './image-filtering.js';
 
 const RENDER_DELAY = 500;
 

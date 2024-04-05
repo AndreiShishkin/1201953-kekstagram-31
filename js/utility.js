@@ -1,6 +1,5 @@
 const SHOW_ERROR_TIME = 5000;
 
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const showAlertErrorLoadData = (message) => {
@@ -14,7 +13,7 @@ const showAlertErrorLoadData = (message) => {
   }, SHOW_ERROR_TIME);
 };
 
-const onClickCloseMessageBlock = (messageBlock) => {
+const onButtonMessageModalClick = (messageBlock) => {
   const handler = (evt) => {
     if (isEscapeKey(evt)) {
       messageBlock.remove();
@@ -34,7 +33,7 @@ const showAlertSuccessSendData = () => {
     }
   });
 
-  document.addEventListener('keydown', onClickCloseMessageBlock(successBlock));
+  document.addEventListener('keydown', onButtonMessageModalClick(successBlock));
 
   successBlock.querySelector('.success__button').addEventListener('click', () => {
     successBlock.remove();
@@ -54,7 +53,7 @@ const showAlertErrorSendData = (text) => {
     }
   });
 
-  document.addEventListener('keydown', onClickCloseMessageBlock(errorBlock));
+  document.addEventListener('keydown', onButtonMessageModalClick(errorBlock));
 
   errorBlock.querySelector('.error__button').addEventListener('click', () => {
     errorBlock.remove();

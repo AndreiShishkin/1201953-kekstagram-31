@@ -1,6 +1,6 @@
-import { getObjectsByDomElements } from '/js/printPosts.js';
+import { getObjectsByDomElements } from './print-posts.js';
 import { isEscapeKey } from '/js/utility.js';
-import { createComment } from './createElements';
+import { createComment } from './create-elements';
 
 const objectsByElements = getObjectsByDomElements();
 
@@ -33,7 +33,7 @@ const addCommentsToDomElement = () => {
   checkingComments();
 };
 
-const onClickShowMoreComments = () => {
+const onButtonLoadCommentsClick = () => {
   addCommentsToDomElement();
 };
 
@@ -48,14 +48,14 @@ const onKeydownClosePopupPost = (evt) => {
     closeModalPost();
 
     document.removeEventListener('keydown', onKeydownClosePopupPost);
-    buttonLoadComments.removeEventListener('click', onClickShowMoreComments);
+    buttonLoadComments.removeEventListener('click', onButtonLoadCommentsClick);
   }
 };
 
 closeButton.addEventListener('click', () => {
   closeModalPost();
   document.removeEventListener('keydown', onKeydownClosePopupPost);
-  buttonLoadComments.removeEventListener('click', onClickShowMoreComments);
+  buttonLoadComments.removeEventListener('click', onButtonLoadCommentsClick);
 });
 
 const showComments = (comments) => {
@@ -76,7 +76,7 @@ const printModalPost = (post) => {
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onKeydownClosePopupPost);
-  buttonLoadComments.addEventListener('click', onClickShowMoreComments);
+  buttonLoadComments.addEventListener('click', onButtonLoadCommentsClick);
 };
 
 const onClickOpenPopupPost = (evt) => {

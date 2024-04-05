@@ -2,13 +2,7 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 
 const documentFragment = document.createDocumentFragment();
 
-const objectsByElements = new Map;
-
-// const Filters = {
-//   default: (posts) => posts,
-//   random: (posts) => randomSort(posts),
-//   discussed: (posts) => mostPopularSort(posts)
-// };
+const objectsByElements = new Map();
 
 const setObjectByDomElements = (element, object) => {
   objectsByElements.set(element, object);
@@ -18,7 +12,6 @@ const getObjectsByDomElements = () => objectsByElements;
 
 const printPictures = (posts, elementToRender, filterCallBack = (arrayTorender) => arrayTorender) => {
   if (!(elementToRender instanceof Node)) {
-    console.error('Параметр не является дом-элементом');
     return;
   }
   filterCallBack(posts.slice())

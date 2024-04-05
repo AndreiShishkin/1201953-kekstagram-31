@@ -1,7 +1,7 @@
-const hashtagRegex = /^#[a-zа-яё0-9]{1,19}/i;
-
 const MAX_COMMENT_LENGTH = 140;
 const MAX_COUNT_HASHTAGS = 5;
+
+const hashtagRegex = /^#[a-zа-яё0-9]{1,19}/i;
 
 const validateComment = (value) => value.length <= MAX_COMMENT_LENGTH;
 
@@ -24,7 +24,7 @@ const validateInicial = (validateForm, hashtagsInput, commentInput) => () => {
   },
   false);
 
-  const errorHashtags = () => {
+  const getErrorHashtags = () => {
     const hashtags = hashtagsInput.value.toLowerCase().split(' ').filter((element) => element !== '');
     const duplicates = hashtags.filter((element, indexCurrentElement, hashtagsArray) => hashtagsArray.indexOf(element) !== indexCurrentElement);
     if (hashtags.length > MAX_COUNT_HASHTAGS) {
@@ -46,7 +46,7 @@ const validateInicial = (validateForm, hashtagsInput, commentInput) => () => {
     }
   };
 
-  pristine.addValidator(hashtagsInput, validateHashtags, errorHashtags);
+  pristine.addValidator(hashtagsInput, validateHashtags, getErrorHashtags);
   pristine.addValidator(commentInput, validateComment, 'длина комментария больше 140 символов');
   return pristine;
 };

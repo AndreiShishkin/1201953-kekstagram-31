@@ -21,7 +21,7 @@ const editPicture = (range, uploadPicture, sliderContainer, effectLevel) => {
   let effectValue;
   generateSlider(range);
 
-  const onChangeSelectEffect = (evt) => {
+  const onSliderChange = (evt) => {
     effectValue = evt.target.value;
 
     if(effectValue === 'none') {
@@ -85,7 +85,7 @@ const editPicture = (range, uploadPicture, sliderContainer, effectLevel) => {
     effectLevel.value = value;
   });
 
-  return onChangeSelectEffect;
+  return onSliderChange;
 };
 
 export { scaleImage, editPicture };
