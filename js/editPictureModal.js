@@ -54,7 +54,7 @@ const editPicture = (range, uploadPicture, sliderContainer, effectLevel) => {
         break;
 
       case 'heat':
-        updateSliderRange(range, 1, 3, 0.1, 2);
+        updateSliderRange(range, 1, 3, 0.1, 3);
         break;
     }
   };
@@ -62,23 +62,23 @@ const editPicture = (range, uploadPicture, sliderContainer, effectLevel) => {
   range.noUiSlider.on('update', (value) => {
     switch (effectValue) {
       case 'chrome':
-        uploadPicture.style.filter = `grayscale(${1 - value})`;
+        uploadPicture.style.filter = `grayscale(${1})`;
         break;
 
       case 'sepia':
-        uploadPicture.style.filter = `sepia(${1 - value})`;
+        uploadPicture.style.filter = `sepia(${1})`;
         break;
 
       case 'marvin':
-        uploadPicture.style.filter = `invert(${100 - value}%)`;
+        uploadPicture.style.filter = `invert(${100}%)`;
         break;
 
       case 'phobos':
-        uploadPicture.style.filter = `blur(${3 - value}px)`;
+        uploadPicture.style.filter = `blur(${3}px)`;
         break;
 
       case 'heat':
-        uploadPicture.style.filter = `brightness(${3 - value})`;
+        uploadPicture.style.filter = `brightness(${3})`;
         break;
     }
 
